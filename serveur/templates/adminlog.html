@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link type="text/css" href="bootstrap.css" rel="stylesheet">
+    <link type="text/css" href="style.css" rel="stylesheet">
+  </head>
+  <body class="bg-dark">
+    <div class="text-center">
+    <button type="button" id="btnLog" class="btn btn-outline-info">Connexion</button><button type="button" id="btnReg" class="btn btn-outline-info">Inscription</button>
+    </div>
+    <!-- Connexion -->
+  <form class="w-25 m-auto bg-light p-2 disparait" id="connectionAdmin">
+    <button type="button" class="btn btn-primary" id="notRegister">Pas encore inscrit?</button>
+    <h2 class="text-center">Connexion</h2>
+    <div class="form-group">
+      <label>Adresse Email</label>
+      <input type="email" class="form-control" name="emailco" aria-describedby="emailHelp" placeholder="Entrez votre Email">
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" class="form-control" name="password1co" placeholder="Entrez votre password">
+    </div>
+    <div id="resultError" class="text-center text-danger"></div>
+    <button type="button" class="btn btn-primary" id="btnConnection">Connexion</button>
+  </form>
+  <!-- Inscription -->
+   <form class="w-25 m-auto bg-light p-2 disparait" id="registrationAdmin">
+    <button type="button" class="btn btn-primary" id="register">Déjà inscrit</button>
+    <h2 class="text-center">Inscription</h2>
+    <div class="form-group">
+      <label>Adresse Email</label>
+      <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Entrez votre Email">
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" class="form-control" name="password1ins" placeholder="Entrez votre password">
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" class="form-control" name="password2ins" placeholder="Re-tapez votre password">
+    </div>
+    <div class="form-group">
+      <label>Prénom</label>
+      <input type="text" class="form-control" name="prenom" placeholder="Entrez votre prénom">
+    </div>
+    <div id="resultErrorReg" class="text-center text-danger"></div>
+    <button type="button" class="btn btn-primary" id="btnRegister">Inscription</button>
+  </form>
+    <script type="text/javascript" src="jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="bootstrap.js"></script>
+    <script src="socket.io-client/dist/socket.io.js"></script>
+    <script type="text/javascript" src="scriptadmin.js"></script>
+  </body>
+</html>
+
+

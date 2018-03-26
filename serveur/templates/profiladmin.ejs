@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Profil</title>
+		  <link type="text/css" href="bootstrap.css" rel="stylesheet">
+		  <link type="text/css" href="style.css" rel="stylesheet">
+		  <link type="text/css" href="admin.css" rel="stylesheet">
+	</head>
+	<body class="bodyadmin bg-dark">
+		<nav class="navbar navbar-expand-lg navbar-light bg-dark text-white">
+        <a class="navbar-brand text-white" href="accueil">Winachat</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" id="navLeft" href="#"><span class="fontawesome-align-justify"></span></a>
+            </li>
+          </ul>
+          <div class="form-inline">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="fontawesome-align-justify"></span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="accueil">Accueil</a>
+              <a class="dropdown-item" href="profil">Mon profil</a>
+              <a class="dropdown-item" href="#" id="disconnection">Déconnexion</a>
+            </div>
+            <span> <%= name %></span>
+          </div>
+        </div>
+      </nav>
+		<!-- Corps de page -->
+		<div class="mt-5">
+            <div class="col-sm-2 backGrey" id="leftmenuadmin">
+	            <ul>
+	                <li><a href="accueil">Accueil</a></li>
+	                <li><a href="interface">Interface de modération</a></li>
+	                <% if(grade === 'administrateur') { %>
+	                <li><a href="administration">Administration</a></li>
+	                <% } %>
+	            </ul>
+            </div>
+			<h2 class="text-white text-center">Modifier mon profil</h2>
+			<div id="accordion" class="w-50 m-auto">
+			  <div class="card">
+			    <div class="card-header" id="headingOne">
+			      <h5 class="mb-0">
+			        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+			          Infomation personnel
+			        </button>
+			      </h5>
+			    </div>
+			    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+			      <div class="card-body">
+			      	<div id="updateAdminResult" class="text-center bg-success"></div>
+			        <form class="bg-light text-center p-5 rounded text-white">
+						<div class="form-group">
+							<input type="text" name="name" class="w-75" value=" <%= infos['name'] %>">
+						</div>
+						<div class="form-group">
+							<input type="email" name="email" class="w-75" value=" <%= infos['email'] %>">
+						</div>
+					    <button type="button" class="btn btn-dark" id="updateAdmin">Modifier</button>
+					</form>
+			      </div>
+			    </div>
+			  </div>
+			  <div class="card">
+			    <div class="card-header" id="headingTwo">
+			      <h5 class="mb-0">
+			        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+			          Mot de passe 
+			        </button>
+			      </h5>
+			    </div>
+			    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+			      <div class="card-body">
+						<form class="bg-light text-center p-5 rounded text-white">
+							<div id="updateadminResultPassword" class="text-center bg-success"></div>
+							<div id="updateadminResultPasswordError" class="text-center bg-danger"></div>
+							<div class="form-group">
+								<input type="password" name="password" class="w-75" placeholder=" Nouveau mot de passe">
+							</div>
+							<div class="form-group">
+								<input type="password" name="passwordv" class="w-75" placeholder=" Retapez le mot de passe">
+							</div>
+						    <button type="button" class="btn btn-dark" id="updateAdminPassword">Modifier</button>
+						</form>
+			      </div>
+			    </div>
+			  </div>
+			  <div class="card">
+			    <div class="card-header" id="headingThree">
+			      <h5 class="mb-0">
+			        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+			          Photo de profil
+			        </button>
+			      </h5>
+			    </div>
+			    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+			      <div class="card-body">
+						<form class="bg-light text-center p-5 rounded text-white"ref='uploadForm' id='uploadForm' action='http://projetchat.com/updateImg'  method='post' encType="multipart/form-data">
+							<div class="form-group text-dark">
+						    	<input type="file" name="sampleFile" id='file'/>
+						    	<input type="text" name="idclient" value="<%= infos['idadmin'] %>" class="disparait">
+						    </div>
+						    	<div id="prev"></div><br/>
+						    <input type='submit' value='Modifier' />
+						</form>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+    <script type="text/javascript" src="jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="bootstrap.js"></script>
+    <script src="socket.io-client/dist/socket.io.js"></script>
+    <script type="text/javascript" src="scriptadmin.js"></script>
+    <script type="text/javascript" src="updateadmin.js"></script>
+	</body>
+</html>

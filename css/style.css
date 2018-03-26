@@ -1,0 +1,189 @@
+@import url(https://wli.nours312.com/api/?family=fontawesome);
+/* fontawesome */
+[class*="fontawesome-"]:before {
+  font-family: 'fontawesome', sans-serif;
+  font-size: 1.2rem;
+}
+.disparait{
+  display: none;
+}
+ul{
+  list-style-type: none !important;
+}
+.backGrey{
+  background-color: #eeeeee !important;
+  margin: 0;
+  padding: 0;
+}
+.grisfondb{
+  background-color: #e5e2e2 !important;
+}
+/* Chat client */
+  /* Bouton click */
+#chatmodal{
+  position: absolute;
+  right: 2%;
+  bottom: 2%;
+  color: #000;
+}
+#chatmodal:hover{
+  color: red;
+}
+  /* Boite de dialogue */
+#modalchat{
+  background-color: #fff;
+  width: 25%; 
+  border-radius: 5px 5px 0px 0px;
+  position: absolute;
+  right: 2%;
+  bottom: 0%;
+}
+#headerModalChat{
+  width: 100%;
+  background-color: #b92929;
+  color: #fff;
+  border-radius: 5px 5px 0px 0px;
+  text-align: center;
+}
+/* Partie haute boite de dialogue */
+#headerModalChat h2{
+  display: inline-block;
+  font-size: 1.2rem;
+}
+#windowModalClient{
+  display: inline-block;
+  position: absolute;
+  right: 1%;
+}
+#agrandirtchat{
+  display: inline-block;
+  position: absolute;
+  right: 10%;
+}
+/* Partie basse du haut */
+#headerModalTchatDown{
+  background-color: #eeeeee;
+  padding-bottom: 2%;
+}
+#headerModalTchatDown img{
+  display: inline-block;
+  width: 15%;
+  margin-top: -5%;
+  border-radius: 10px;
+  margin-left: 5%;
+  padding-top: 2%;
+  padding-left: 2%;
+}
+#headerModalTchatDown span{
+  display: inline-block;
+}
+#thumbsUp{
+  display: inline-block;
+  margin-top: 2%;
+  position: absolute;
+  right: 10%;
+}
+#thumbsDown{
+  display: inline-block;
+  margin-top: 2%;
+  position: absolute;
+  right: 20%;
+}
+/* Fin tchat client */
+.bodyclient{
+  background-color: #000;
+  color: #000;
+}
+.disparait{
+  display: none;
+}
+.blocTchat ul{
+  color: #000;
+  background-color: #fff;
+  height: 300px;
+  padding: 0%;
+  overflow: auto;
+  list-style-type: none;
+}
+.blocTchatClient ul{
+  color: #000;
+  background-color: #fff;
+  height: 300px;
+  padding: 0%;
+  overflow: auto;
+  list-style-type: none;
+}
+.liChatAdmin{
+  padding: 2% 0% 2% 0%;
+  text-align: left;
+  margin-top: 1%;
+}
+.liChatAdmin li{
+  width: 60%;
+  display: inline-block;
+  background-color: #f3f2f2;
+  text-align: justify;
+  word-wrap: break-word;
+  padding: 1%;
+}
+.liChatAdmin img{
+  margin-right: 5%;
+  margin-left: 5%;
+}
+.liChatClient{
+  padding: 2% 0% 2% 0%;
+  text-align: right;
+  margin-top: 1%;
+}
+.liChatClient li{
+  width: 60%;
+  display: inline-block;
+  background-color: #e5e2e2;
+  text-align: justify;
+  word-wrap: break-word;
+  padding: 1%;
+}
+.liChatClient img{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.logInTchat{
+  font-style: italic;
+  padding: 2%;
+}
+/* images t'chat */
+.imgTchat{
+  display: inline-block;
+  width: 10%;
+}
+/* Textarea client */
+#content{
+  width: 90%;
+  border-radius: 10px;
+  margin-left: 5%;
+  border: 1px solid #ccc;
+  margin-bottom: 5%;
+}
+/* Ailleurs */
+.clientonline{
+  background-color: green;
+}
+.clientnotline{
+  background-color: red;
+}
+.clientnewmsg{
+  color: blue;
+}
+@media screen and (min-width: 1500px) {
+  .blocTchat ul{
+    height: 650px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  #modalchat{
+    width: 35%;
+  }
+}
+
+
+

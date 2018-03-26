@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>T'chat</title>
+    <link type="text/css" href="bootstrap.css" rel="stylesheet">
+    <link type="text/css" href="style.css" rel="stylesheet">
+  </head>
+  <body class="bodyclient">
+    <div id="modalchat" class="disparait">
+        <div id="headerModalChat">
+        <h2>Assistance</h2><div id="windowModalClient"><span class="fontawesome-remove chatmodal"></span></div><span class="fontawesome-external-link" id="agrandirtchat">
+        </div>
+        <div id="headerModalTchatDown">
+        </div>
+    <div class="blocTchatClient">
+        <ul class="blocTchatUl">
+        </ul>
+    </div>
+    <div id="result" class="text-center text-success"></div>
+    <div id="resultError" class="text-center text-danger"></div>
+    <div id="otherResult" class="text-center"></div>
+    <textarea id="content"></textarea>
+    </div>
+    <span class="fontawesome-comment-alt chatmodal" id="chatmodal"></span>
+    <script type="text/javascript" src="jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="bootstrap.js"></script>
+    <script src="socket.io-client/dist/socket.io.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+  </body>
+</html>

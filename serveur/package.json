@@ -1,0 +1,31 @@
+{
+  "name": "Projetchat",
+  "version": "0.0.1",
+  "description": "Apllication de t'chat",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
+    "chart.js": "^2.7.2",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-fileupload": "^0.4.0",
+    "global": "^4.3.2",
+    "md5": "^2.2.1",
+    "mocha": "^5.0.4",
+    "mocha-mongodb": "^0.1.2",
+    "mongo-native": "^1.0.28",
+    "mongo-oplog": "^2.1.0",
+    "mongodb": "^2.2.33",
+    "nodemon": "^1.17.1",
+    "sha1": "^1.1.1",
+    "should": "^13.2.1",
+    "sinon": "^4.4.6",
+    "socket.io": "^2.0.4",
+    "socket.io-adapter-mongo": "^2.0.1",
+    "supertest": "^3.0.0",
+    "to": "^0.2.9",
+    "uniqid": "^4.1.1",
+    "update": "^0.7.4"
+  }
+}
