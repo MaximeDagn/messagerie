@@ -3,12 +3,14 @@ const app = express();
 const md5 = require('md5');
 const sha1 = require('sha1');
 const fs = require('fs'); 
-const https = require('https');
-const options = {
-    cert: fs.readFileSync('/etc/letsencrypt/live/maxime.ws312.net/fullchain.pem'),
-    key: fs.readFileSync('/etc/letsencrypt/live/maxime.ws312.net/privkey.pem')
-};
-const server = https.createServer(options, app).listen(443);
+const http = require('http');
+//const https = require('https');
+// const options = {
+//     cert: fs.readFileSync('/etc/letsencrypt/live/maxime.ws312.net/fullchain.pem'),
+//     key: fs.readFileSync('/etc/letsencrypt/live/maxime.ws312.net/privkey.pem')
+// };
+//const server = https.createServer(options, app).listen(443);
+const server = http.createServer(app).listen(80);
 const io = require('socket.io')(server);
 //server.listen(80);
 const fileUpload = require('express-fileupload');
@@ -40,7 +42,7 @@ app.use(express.static(__dirname + '/node_modules'));
 app.use(express.static(__dirname + '/vendor'));
 app.use(express.static(__dirname + '/img'));
 // ROUTAGE //
-app.get('/login', function (req, res){
+app.get('/', function (req, res){
   res.sendFile( __dirname  + '/templates/adminlog.html');
 });
 app.get('/disconnection', function (req, res){
@@ -656,7 +658,7 @@ app.post('/transferConvers', function(req, res){
                 db.collection('convers').update({_idconvers: idconvers}, { $addToSet: { 'lastAdmin': idadminNow}});
                     searchAdminConvers(result.idadmin);
                 db.collection("message").insert({'_idconvers': idconvers, 'message': 'Transfert de conversation, Motif: '+comment, 'date': new Date(), type: 'log'})
-                db.collection("message").insert({'_idconvers': idconvers, 'message': 'Votre conversation viens d\'être transféré', 'date': new Date(), type: 'logP'})
+                db.collection("message").insert({'_idconvers': idconvers, 'message': 'Votre conversation vient d\'être transférée', 'date': new Date(), type: 'logP'})
                     searchAdminConvers(idadminNow);
                     res.send('ok')
                     db.close();
@@ -742,7 +744,7 @@ function insertnewmsg(message, idclient, idconvers){
              if (err) throw err;
              if (result === null){
                 db.collection("convers").insert({'_idconvers': idconvers ,'client' : idclient,'idadmin': null,'nameidadmin': null,'archive': 'no', 'nbmessage': 0,'note': null, 'date' : new Date(), 'lastAdmin':[]})
-                db.collection("message").insert({'_idconvers': idconvers, 'auteur': idclient, 'message': idclient+' viens de créer la conversation', 'date': new Date(), type: 'log'})
+                db.collection("message").insert({'_idconvers': idconvers, 'auteur': idclient, 'message': idclient+' vient de créer la conversation', 'date': new Date(), type: 'log'})
                 db.close();
              }else if(result.archive === 'break'){
                 db.collection('convers').update({_idconvers: idconvers}, { $set: { archive: 'no'}});
@@ -1079,7 +1081,7 @@ io.sockets.on('connection', function(socket){
                 }
                 db.collection("admin").findOne({'idadmin' : idadmin}, function(err, result){
                 if (err) throw err;
-                db.collection("message").insert({'_idconvers': idconvers, 'message': result.name+' viens de rejoindre la conversation', 'date': new Date(), type: 'logP'})
+                db.collection("message").insert({'_idconvers': idconvers, 'message': result.name+' vient de rejoindre la conversation', 'date': new Date(), type: 'logP'})
                     if(typeof sockets[idnewclient] === 'undefined'){
                         console.log('idclient undefined')
                     }else{
@@ -1219,14 +1221,18 @@ io.sockets.on('connection', function(socket){
                     if(results.length > 0){
                         var nb = 0;
                         for(var i=0; i < results.length; i++){
-                            serchmsg(results[i].idadmin, results[i]._idconvers)
+                            db.collection("message").findOne({'_idconvers': results[i]._idconvers, 'auteur' : results[i].idadmin}, function(err, resultat){
+                                if(resultat != null){
+                                    searchmsg(resultat.idadmin, resultat._idconvers)
+                                }
+                            });
                         }
                         db.close();
                     }
                 });
             });
         }, 300000);
-        function serchmsg(idadmin, idconvers){
+        function searchmsg(idadmin, idconvers){
             MongoClient.connect("mongodb://localhost/projetchat", function(error, db){
                 db.collection("message").findOne({'_idconvers' : idconvers}, { sort: { _id: -1 }, limit: 1 }, function(err, resultat){
                     if(idadmin === null || idadmin === 'null' || idadmin === undefined){

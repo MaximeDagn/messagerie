@@ -1,7 +1,7 @@
   var idClient;
   var idConvers;
   var socketAdmin = {};
-  var socket = io.connect('https://maxime.ws312.net:80');
+  var socket = io.connect('https://maxime.ws312.net:443');
   if(document.cookie.indexOf('idClient') ===-1) {
     $.ajax({
       url: 'https://maxime.ws312.net/createUser',
@@ -12,7 +12,7 @@
         checkConvers();
       },
       error: function(objet, statut, error){
-        window.location = "https://maxime.ws312.net/500";
+        $('.blocTchatUl').append("<li class='logInTchat' >"+messageBdd[i]['message']+"</li>");
       }
     });
   }else{
@@ -36,7 +36,7 @@
         }
       },
       error: function(objet, statut, error){
-        window.location = "https://maxime.ws312.net/500";
+        $('.blocTchatUl').append("<li class='logInTchat' >"+messageBdd[i]['message']+"</li>");
       }
     });
   }
@@ -71,7 +71,7 @@
           }
         },
         error: function(objet, statut, error){
-            window.location = "https://maxime.ws312.net/500";
+            $('.blocTchatUl').append("<li class='logInTchat' >"+messageBdd[i]['message']+"</li>");
         }
     });
   }
@@ -156,7 +156,7 @@
               }
             },
             error: function(objet, statut, error){
-              window.location = "https://maxime.ws312.net/500";
+              $('.blocTchatUl').append("<li class='logInTchat' >Service momentanément indisponible</li>");
             }
           });
       }
@@ -204,8 +204,7 @@
         var message = $(this).val();
         var regexFirstChar = new RegExp('^[a-zA-Z0-9_]');
         var testMessage = regexFirstChar.test(message);
-        if(message.length > 2 && testMessage === true){ 
-          e.preventDefault();
+        if(message.length > 2 && testMessage === true){
           $.ajax({
             url: 'https://maxime.ws312.net/insert',
             type: 'POST',

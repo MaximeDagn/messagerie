@@ -1,4 +1,6 @@
-	$('.backGrey').css('height',$(window).height().toString()-50+"px");
+	//var adresseUrl = 'https://maxime.ws312.net';
+  var adresseUrl = 'http://projetchat.com';
+  $('.backGrey').css('height',$(window).height().toString()-50+"px");
 	$(window).resize(function(){
 		$('.backGrey').css('height',$(window).height().toString()-50+"px");
 	});
@@ -30,7 +32,7 @@
 		var emailverif = validateEmail(email);
 		if(emailverif == true){
 			$.ajax({
-        url: 'https://maxime.ws312.net/connection',
+        url: adresseUrl+'/connection',
         type: 'POST',
         data: 'email=' + email+ '&password='+ password,
         datatype: 'json',
@@ -39,7 +41,7 @@
             $('#resultError').html('Les identifiants ne correspondent pas.');
           }else{
           	document.cookie = "idadmin="+retour.id+"; expires=Tue, 19 Jan 2038 03:14:07 UTC";
-      	    window.location = "https://maxime.ws312.net/accueil";
+      	    window.location = adresseUrl+"/accueil";
           }
         },
         error: function(objet, statut, error){
@@ -64,19 +66,19 @@
 		}
 		if (passwordvalid == true && emailverif == true){
 			$.ajax({
-        url: 'https://maxime.ws312.net/register',
+        url: adresseUrl+'/register',
         type: 'POST',
         data: 'email=' + email+ '&password='+ password + '&name=' + name+'&role=' +role,
         datatype: 'json',
         success: function(retour, statut){
           if(retour === 'ok'){
-          	window.location = "https://maxime.ws312.net/pending";
+          	window.location = adresseUrl+"/pending";
           }else if(retour === 'email'){
             $('#resultErrorReg').html('L\'email renseigné est déjà utilisé.');
           }
         },
         error: function(objet, statut, error){
-          window.location = "https://maxime.ws312.net/500";
+          window.location = adresseUrl+"/500";
         }
       });
 		}else{
@@ -90,7 +92,7 @@
 		var name = $('input[name=name]').val();
 		var email = $('input[name=email]').val();
     $.ajax({
-      url: 'https://maxime.ws312.net/updateAdmin',
+      url: adresseUrl+'/updateAdmin',
       type: 'POST',
       data: 'name=' + name+ '&email='+ email + '&idadmin='+ idadmin,
       datatype: 'json',
@@ -109,7 +111,7 @@
 		var email = $('input[name=email]').val();
 		if(password === passwordv){
       $.ajax({
-        url: 'https://maxime.ws312.net/updateAdminPassword',
+        url: adresseUrl+'/updateAdminPassword',
         type: 'POST',
         data: 'password=' + password+ '&idadmin='+ idadmin+'&email=' + email,
         datatype: 'json',
@@ -128,12 +130,12 @@
 	// Deconnexion //
 	$('#disconnection').click(function(){
 	    $.ajax({
-    		url: 'https://maxime.ws312.net/disconnection',
+    		url: adresseUrl+'/disconnection',
     		type: 'GET',
     		success: function(retour, statut){
     			idadmin = document.cookie.replace(/.*idadmin\=(\w+)\;?.*/, '$1');
     			document.cookie = "idadmin="+idadmin+"; expires=Tue, 27 Feb 2018 03:14:07 UTC";
-    			window.location = "https://maxime.ws312.net/login";
+    			window.location = adresseUrl+"/login";
     		},
         error: function(objet, statut, error){
         	console.log("error")
@@ -154,7 +156,7 @@
       }
     }
 		$.ajax({
-      url: 'https://maxime.ws312.net/statusAdmin',
+      url: adresseUrl+'/statusAdmin',
       type: 'POST',
       data: 'statut=' + statusAdmin+ '&idadmin='+ idadmin,
       datatype: 'json',
@@ -183,7 +185,7 @@
     var socketAdmin = {};
   // Fin des variables global
   // Début de socket //
-    var socket = io.connect('https://maxime.ws312.net:443');
+    var socket = io.connect(adresseUrl+':80');
     //  Emit à la connexion //
     socket.emit('adminConnect', name);
     // Fin emit à la connexion // 
@@ -276,11 +278,11 @@
       $('#buttonNow'+idconvers).addClass('conversInNow');
       $('div').remove('.globalTchat');
       $('div').remove('.infosClientAction');
-      $("<div class='globalTchat'><div class='p-2 blocTchat bg-white border'><ul class='blocMsgAdmin' id='"+idconvers+"'></ul></div><div class='text-center text-success resultMsg'></div><div class='text-center text-danger resultMsgError'></div><textarea class='content' id='sendadmin'></textarea><button class='btn btn-secondary' data-endConvers='"+idconvers+"' onclick='endConvers(this)'>Terminer la conversation</button></div>").prependTo('.unitTchat');
+      $("<div class='globalTchat'><div class='p-2 blocTchat bg-white border'><ul class='blocMsgAdmin' id='"+idconvers+"'></ul></div><div class='text-center text-success resultMsg'></div><div class='text-center text-danger resultMsgError'></div><textarea class='content' id='sendadmin'></textarea></div>").prependTo('.unitTchat');
       if(typeof sockets[idclient] === 'undefined'){
         $("<div class='infosClientAction'><p>Erreur 500, ce contenu n'a pas pu être chargé</p></div>").appendTo('.unitAction');
       }else{
-        $("<div class='infosClientAction'><div class='resultInfos text-center text-success'></div><div class='mt-2 p-2'><input type='text' name='name' value='"+sockets[idclient].name+"' placeholder='Ajouter un nom' class='mb-2 w-75 p-2 rounded updateClientInput'><input type='email' name='email' value='"+sockets[idclient].email+"' placeholder='Ajouter un e-mail' class='mb-2 w-75 p-2 rounded updateClientInput'><input type='text' name='phone' value='"+sockets[idclient].phone+"' placeholder='Ajouter un numéro' class='mb-2 w-100 p-2 rounded updateClientInput'><h3>Commentaire</h3><textarea class='w-100 mb-2 rounded' placeholder='Ajouter un commentaire' id='textareaComment'></textarea><button id='addComment'>Ajouter</button></div><div class='p-2'><h4>Chemin du visiteur</h4><div class='divPathClient mb-2'><ul class='pathClient'></ul></div><div class='row subBeforDivPathClient'><div class='col-4 subDivPathClient' id='firstConversClient'></div><div class='col-4 subDivPathClient' id='numberChatClient'></div><div class='col-4 subDivPathClient' id='timeConversNow'></div></div><div class='globalhisto disparait'><h3>Historique</h3><div class='tabhisto'><small><table class='table'><thead><tr><th scope='col'>Agent</th><th scope='col'>Satisfaction</th><th scope='col'>Jour</th><th scope='col'>Message</th></tr></thead><tbody class='histoadd'></tbody></table></small></div></div><h3>Informations complémentaire</h3><small><div class='border p-2'><span class='font-weight-bold'>Plateforme:</span><br/>"+sockets[idclient].plateform+"<br/><span class='font-weight-bold'>Adresse IP:</span><br/>"+sockets[idclient].adresseip+"<br/><span class='font-weight-bold'>Agent utilisateur:</span><br/>"+sockets[idclient].agent+"</div></small></div></div>").appendTo('.unitAction');
+        $("<div class='infosClientAction'><div class='resultInfos text-center text-success'></div><div class='mt-2 p-2'><img src='imgbase.png' class='float-left'><input type='text' name='name' value='"+sockets[idclient].name+"' placeholder='Ajouter un nom' class='mb-2 w-75 p-2 rounded updateClientInput'><input type='email' name='email' value='"+sockets[idclient].email+"' placeholder='Ajouter un e-mail' class='mb-2 w-75 p-2 rounded updateClientInput'><input type='text' name='phone' value='"+sockets[idclient].phone+"' placeholder='Ajouter un numéro' class='mb-2 w-100 p-2 rounded updateClientInput'><h3>Commentaire</h3><textarea class='w-100 mb-2 rounded' placeholder='Ajouter un commentaire' id='textareaComment'></textarea><button id='addComment'>Ajouter</button></div><div class='p-2'><h4>Chemin du visiteur</h4><div class='divPathClient mb-2'><ul class='pathClient'></ul></div><div class='row subBeforDivPathClient'><div class='col-4 subDivPathClient' id='firstConversClient'></div><div class='col-4 subDivPathClient' id='numberChatClient'></div><div class='col-4 subDivPathClient' id='timeConversNow'></div></div><div class='globalhisto disparait'><h3>Historique</h3><div class='tabhisto'><small><table class='table'><thead><tr><th scope='col'>Agent</th><th scope='col'>Satisfaction</th><th scope='col'>Jour</th><th scope='col'>Message</th></tr></thead><tbody class='histoadd'></tbody></table></small></div></div><h3>Informations complémentaire</h3><small><div class='border p-2'><span class='font-weight-bold'>Plateforme:</span><br/>"+sockets[idclient].plateform+"<br/><span class='font-weight-bold'>Adresse IP:</span><br/>"+sockets[idclient].adresseip+"<br/><span class='font-weight-bold'>Agent utilisateur:</span><br/>"+sockets[idclient].agent+"</div></small></div></div>").appendTo('.unitAction');
       }
       // Information client //
       $('.updateClientInput').click(function(){
@@ -290,7 +292,7 @@
           var nominput = $(this).attr('name');
           var infos = $('input[name='+nominput+']').val();
             $.ajax({
-              url: 'https://maxime.ws312.net/updateClient',
+              url: adresseUrl+'/updateClient',
               type: 'POST',
               data: 'name=' + nominput+ '&infos='+ infos+ '&client='+ idclient,
               datatype: 'json',
@@ -312,7 +314,7 @@
       $('#addComment').click(function(){
         var content = $('#textareaComment').val();
         $.ajax({
-          url: 'https://maxime.ws312.net/addCommentaire',
+          url: adresseUrl+'/addCommentaire',
           type: 'POST',
           data: 'commentaire=' + content+ '&idconvers='+ idconvers,
           datatype: 'json',
@@ -327,7 +329,7 @@
       })
       // Chargement ancien message //
       $.ajax({
-        url: 'https://maxime.ws312.net/actuAdmin',
+        url: adresseUrl+'/actuAdmin',
         type: 'POST',
         data: 'idconvers='+ idconvers+'&idadmin='+idadmin,
         datatype: 'json',
@@ -360,7 +362,7 @@
       });
       // Recherche historique client //
       $.ajax({
-        url: 'https://maxime.ws312.net/searchLastConvers',
+        url: adresseUrl+'/searchLastConvers',
         type: 'POST',
         data: 'idclient='+ idclient,
         datatype: 'json',
@@ -381,7 +383,7 @@
       });
       // Chemin du client //
       $.ajax({
-        url: 'https://maxime.ws312.net/pathClient',
+        url: adresseUrl+'/pathClient',
         type: 'POST',
         data: 'idclient='+ idclient,
         datatype: 'json',
@@ -396,7 +398,7 @@
       });
       // Statistique du client //
       $.ajax({
-        url: 'https://maxime.ws312.net/statsClient',
+        url: adresseUrl+'/statsClient',
         type: 'POST',
         data: 'idclient='+ idclient+'&idconvers='+ idconvers,
         datatype: 'json',
@@ -421,10 +423,11 @@
           nbKey++;
           if (e.which == 13){
             var message = $(this).val();
-            if(message.length > 2){
-              e.preventDefault();
+            var regexFirstChar = new RegExp('^[a-zA-Z0-9_]');
+            var testMessage = regexFirstChar.test(message);
+            if(message.length > 2 && testMessage === true){
                 $.ajax({
-                  url: 'https://maxime.ws312.net/insertAdmin',
+                  url: adresseUrl+'/insertAdmin',
                   type: 'POST',
                   data: 'message=' + message+ '&idconvers='+ idconvers + '&adminid=' + idadmin,
                   datatype: 'json',
@@ -490,7 +493,7 @@
   function endConvers(id){
     var idendconvers = $(id).attr('data-endConvers');
     $.ajax({
-      url: 'https://maxime.ws312.net/archivconvers',
+      url: adresseUrl+'/archivconvers',
       type: 'POST',
       data: 'idconvers='+ idendconvers+'&idadmin='+name,
       datatype: 'json',
@@ -531,7 +534,7 @@
       var idconvers = $('.blocMsgAdmin').attr('id');
       var messageTransfert = $('.transSelect option:selected').text();
       $.ajax({
-        url: 'https://maxime.ws312.net/transferConvers',
+        url: adresseUrl+'/transferConvers',
         type: 'POST',
         data: 'nameclient='+ nameclient+ '&idconvers='+idconvers+'&comment='+messageTransfert+'&idadminNow='+name,
         datatype: 'json',
@@ -563,7 +566,7 @@
     var idconvers = $(id).attr('data-convers');
     var client = $(id).attr('data-client');
     $.ajax({
-      url: 'https://maxime.ws312.net/tchatHistory',
+      url: adresseUrl+'/tchatHistory',
       type: 'POST',
       data: 'idclient='+client +'&idadmin=' +name +'&idconvers='+idconvers,
       datatype: 'json',
